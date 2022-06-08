@@ -31,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnRedRegist = findViewById(R.id.redRegister);
 
+        userHelper = new UserHelper(this);
+
         btnLogin.setOnClickListener(v -> {
             String userEmail = etEmail.getText().toString();
             String userPass = etPassword.getText().toString();
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                     temp = user.getUserPass();
                 }
                 else if (user == null) {
-                    Toast.makeText(this, "Account not Found!", Toast.LENGTH_SHORT).show();
+                    etEmail.setError("This email hasn't registered yet!");
                 }
             }
 
@@ -59,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 etPassword.setError("This field must be filled!");
             }
             else {
-                if (temp.equals(userPass)){
+                if (userPass.equals(temp)){
                     flag2 = 1;
                 }
                 else {

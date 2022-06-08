@@ -31,14 +31,17 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        userHelper = new UserHelper(this);
+
         Users user = getIntent().getParcelableExtra("user");
+        Log.wtf("Check", user.getUserID().toString());
 
         editUName = findViewById(R.id.thisUName);
         saveUName = findViewById(R.id.thisEditUName);
         saveUName.setVisibility(View.INVISIBLE);
 
         tvID = findViewById(R.id.uID);
-        tvID.setText(user.getUserID());
+        tvID.setText(user.getUserID().toString());
         tvEmail = findViewById(R.id.uEmail);
         tvEmail.setText(user.getUserEmail());
         tvUserName = findViewById(R.id.uUsername);
@@ -89,25 +92,25 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         btnDelAcc.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
-            builder.setTitle("Delete Account");
-            builder.setMessage("Are you sure to delete your account?");
-            builder.setCancelable(false);
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    userHelper.dbDelete(user);
-                    Intent delete = new Intent(ProfileActivity.this, LoginActivity.class);
-                    startActivity(delete);
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.cancel();
-                }
-            });
-
+            AlertDialog builder = new AlertDialog.Builder(ProfileActivity.this)
+                    .setTitle("Delete Account")
+                    .setMessage("Are you sure to delete your account?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            userHelper.dbDelete(user);
+                            Intent delete = new Intent(ProfileActivity.this, LoginActivity.class);
+                            startActivity(delete);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .show();
 
         });
 

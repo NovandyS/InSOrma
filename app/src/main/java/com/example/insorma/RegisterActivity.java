@@ -31,6 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegist = findViewById(R.id.btnRegist);
         btnRedLogin = findViewById(R.id.redLogin);
 
+        userHelper = new UserHelper(this);
+
         btnRegist.setOnClickListener(v -> {
             String emailTxt = etEmail.getText().toString();
             String usernameTxt = etUsername.getText().toString();
@@ -49,6 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else {
                     flag1 = 1;
+                    Log.wtf("UserEmailCheck", emailTxt);
                     Users user = userHelper.dbReadEmail(emailTxt);
                     if (user != null){
                         flag1 = 0;
