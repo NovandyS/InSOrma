@@ -1,5 +1,6 @@
 package com.example.insorma;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +9,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +38,6 @@ public class ProfileActivity extends AppCompatActivity {
         userHelper = new UserHelper(this);
 
         Users user = getIntent().getParcelableExtra("user");
-        Log.wtf("Check", user.getUserID().toString());
 
         editUName = findViewById(R.id.thisUName);
         saveUName = findViewById(R.id.thisEditUName);
@@ -111,8 +114,43 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     })
                     .show();
-
         });
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_navigbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        userHelper = new UserHelper(this);
+        Users user = getIntent().getParcelableExtra("user");
+        switch (item.getItemId()){
+            case R.id.home:
+                Intent goHome = new Intent(this, HomeActivity.class);
+                goHome.putExtra("user", user);
+                startActivity(goHome);
+                break;
+            case R.id.history:
+                Intent goHistory = new Intent(this, HistoryActivity.class);
+                goHistory.putExtra("user", user);
+                startActivity(goHistory);
+                break;
+            case R.id.about:
+                Intent goAbout = new Intent(this, AboutActivity.class);
+                startActivity(goAbout);
+                break;
+            case R.id.profile:
+                Intent goProfile = new Intent(this, ProfileActivity.class);
+                goProfile.putExtra("user", user);
+                this.finish();
+                startActivity(goProfile);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

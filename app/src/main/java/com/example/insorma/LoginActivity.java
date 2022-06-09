@@ -52,7 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                     temp = user.getUserPass();
                 }
                 else if (user == null) {
-                    etEmail.setError("This email hasn't registered yet!");
+                    flag1 = -1;
+                    etEmail.setError("This account hasn't registered yet!");
                 }
             }
 
@@ -65,15 +66,22 @@ public class LoginActivity extends AppCompatActivity {
                     flag2 = 1;
                 }
                 else {
-                    etPassword.setError("Password incorrect!");
+                    if (flag1 == -1){
+                        etPassword.setError("This account hasn't registered yet!");
+                    }
+                    else {
+                        etPassword.setError("Password incorrect!");
+                    }
+
                 }
             }
 
             //all correct and login
             if (flag1 == 1 && flag2 == 1){
                 if (user != null){
-                    Intent goHome = new Intent(this, ProfileActivity.class);
+                    Intent goHome = new Intent(this, HomeActivity.class);
                     goHome.putExtra("user", user);
+                    this.finish();
                     startActivity(goHome);
                 }
             }
@@ -81,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btnRedRegist.setOnClickListener(v -> {
             Intent redRegist = new Intent(this, RegisterActivity.class);
+            this.finish();
             startActivity(redRegist);
         });
 

@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.insorma.databases.Databases;
 import com.example.insorma.models.Users;
@@ -106,6 +105,11 @@ public class UserHelper {
         db.delete(TABLE_NAME,
                 "userid = ?", new String[]{user.getUserID() + ""});
         db.close();
+    }
+
+    public void clearDB(String TABLE_NAME){
+        String clearDBQuery = "DELETE FROM "+ TABLE_NAME;
+        db.execSQL(clearDBQuery);
     }
 
 }
