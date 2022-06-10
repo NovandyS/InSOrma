@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,22 +48,32 @@ public class HomeActivity extends AppCompatActivity {
         loginUser = findViewById(R.id.tvLoginUser);
         loginUser.setText(user.getUserUName());
 
-        String url = "https://bit.ly/InSOrmaJSON";
+        String url = "mocki.io/v1/5f379081-2473-4494-9cc3-9e808772dc54";
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest req = new JsonObjectRequest(url, resp -> {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest request = new JsonObjectRequest(url, response -> {
             try {
-                JSONArray furnitures = resp.getJSONArray("furnitures");
+                JSONArray furnitures = response.getJSONArray("furnitures");
 
                 for (int i = 0; i < furnitures.length(); i++){
                     JSONObject furn = furnitures.getJSONObject(i);
 
-                }
+                    String furnName = furn.getString("product_name");
+                    Double furnRating = furn.getDouble("rating");
+                    Integer furnPrice = furn.getInt("price");
+                    String furnImg = furn.getString("image");
+                    String furnDesc = furn.getString("description");
 
+                    Furnitures newFurn = new Furnitures(furnImg, furnName, furnRating, furnPrice, furnDesc);
+
+
+                }
 
             } catch (JSONException e){
                 e.printStackTrace();
             }
+        }, error -> {
+            Log.wtf("error", error.toString());
         });
 
         recyclerView = findViewById(R.id.rvFurnitures);
