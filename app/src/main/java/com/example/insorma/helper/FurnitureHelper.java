@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.insorma.databases.Databases;
 import com.example.insorma.models.Furnitures;
@@ -26,7 +27,7 @@ public class FurnitureHelper {
     public void dbInsert(Furnitures furnitures){
         db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("furnimage", furnitures.getFurnitureName());
+        cv.put("furnimage", furnitures.getFurnitureImage());
         cv.put("furnname", furnitures.getFurnitureName());
         cv.put("furnrating", furnitures.getFurnitureRating());
         cv.put("furnprice", furnitures.getFurniturePrice());
@@ -38,22 +39,37 @@ public class FurnitureHelper {
 
     // read
     public Vector<Furnitures> dbRead(){
-        Vector<Furnitures> listFurnitures = null;
+        Vector<Furnitures> listFurnitures = new Vector<>();
         db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM furnitures", null);
+        cursor.moveToFirst();
+
+        Furnitures temp;
+        String tempImg, tempName, tempDesc;
+        Double tempRating;
+        Integer tempPrice;
+
         if (cursor != null && cursor.getCount() > 0){
-            cursor.moveToFirst();
-            listFurnitures = new Vector<>();
-            listFurnitures.add(new Furnitures(
-                    cursor.getString(0),
-                    cursor.getString(1),
-                    cursor.getDouble(2),
-                    cursor.getInt(3),
-                    cursor.getString(4)
-            ));
+            do {
+                tempImg = cursor.getString(cursor.getColumnIndexOrThrow("furnimage"));
+                tempName = cursor.getString(cursor.getColumnIndexOrThrow("furnname"));
+                tempRating = cursor.getDouble(cursor.getColumnIndexOrThrow("furnrating"));
+                tempPrice = cursor.getInt(cursor.getColumnIndexOrThrow("furnprice"));
+                tempDesc = cursor.getString(cursor.getColumnIndexOrThrow("furndesc"));
+
+                temp = new Furnitures(tempImg, tempName, tempRating, tempPrice, tempDesc);
+                listFurnitures.add(temp);
+
+                cursor.moveToNext();
+
+            } while (!cursor.isAfterLast());
             cursor.close();
         }
         db.close();
         return listFurnitures;
+    }
+
+    public void dbClear(){
+
     }
 }
