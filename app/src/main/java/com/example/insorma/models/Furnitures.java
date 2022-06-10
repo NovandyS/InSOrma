@@ -6,14 +6,13 @@ import android.os.Parcelable;
 public class Furnitures implements Parcelable{
 
     private Integer furnitureID;
-    private int furnitureImage;
+    private String furnitureImage;
     private String furnitureName;
     private Double furnitureRating;
     private Integer furniturePrice;
     private String furnitureDesc;
 
-    public Furnitures(Integer furnitureID, int furnitureImage, String furnitureName, Double furnitureRating, Integer furniturePrice, String furnitureDesc) {
-        this.furnitureID = furnitureID;
+    public Furnitures(String furnitureImage, String furnitureName, Double furnitureRating, Integer furniturePrice, String furnitureDesc) {
         this.furnitureImage = furnitureImage;
         this.furnitureName = furnitureName;
         this.furnitureRating = furnitureRating;
@@ -33,7 +32,7 @@ public class Furnitures implements Parcelable{
 
     protected Furnitures(Parcel in) {
         furnitureID = in.readInt();
-        furnitureImage = in.readInt();
+        furnitureImage = in.readString();
         furnitureName = in.readString();
         furnitureRating = in.readDouble();
         furniturePrice = in.readInt();
@@ -60,11 +59,11 @@ public class Furnitures implements Parcelable{
         this.furnitureID = furnitureID;
     }
 
-    public int getFurnitureImage() {
+    public String getFurnitureImage() {
         return furnitureImage;
     }
 
-    public void setFurnitureImage(int furnitureImage) {
+    public void setFurnitureImage(String furnitureImage) {
         this.furnitureImage = furnitureImage;
     }
 
@@ -108,7 +107,7 @@ public class Furnitures implements Parcelable{
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(furnitureID);
-        parcel.writeInt(furnitureImage);
+        parcel.writeString(furnitureImage);
         parcel.writeString(furnitureName);
         parcel.writeDouble(furnitureRating);
         parcel.writeInt(furniturePrice);

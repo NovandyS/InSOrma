@@ -42,13 +42,16 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         userHelper = new UserHelper(this);
+        furnitureHelper = new FurnitureHelper(this);
 
         Users user = getIntent().getParcelableExtra("user");
 
         loginUser = findViewById(R.id.tvLoginUser);
         loginUser.setText(user.getUserUName());
 
-        String url = "mocki.io/v1/5f379081-2473-4494-9cc3-9e808772dc54";
+        recyclerView = findViewById(R.id.rvFurnitures);
+
+        String url = "https://bit.ly/InSOrmaJSON";
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest request = new JsonObjectRequest(url, response -> {
@@ -65,9 +68,14 @@ public class HomeActivity extends AppCompatActivity {
                     String furnDesc = furn.getString("description");
 
                     Furnitures newFurn = new Furnitures(furnImg, furnName, furnRating, furnPrice, furnDesc);
-
+                    listFurnitures.add(newFurn);
+//                    furnitureHelper.dbInsert(newFurn);
 
                 }
+                FurnitureAdapter adapter = new FurnitureAdapter(this, listFurnitures);
+                recyclerView.setAdapter(adapter);
+                LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+                recyclerView.setLayoutManager(manager);
 
             } catch (JSONException e){
                 e.printStackTrace();
@@ -76,17 +84,12 @@ public class HomeActivity extends AppCompatActivity {
             Log.wtf("error", error.toString());
         });
 
-        recyclerView = findViewById(R.id.rvFurnitures);
-        furnitureHelper = new FurnitureHelper(this);
-
+        requestQueue.add(request);
+//        listFurnitures = furnitureHelper.dbRead();
         //dummy data test
 //        for(int i =0;i<10;i++){
 //            furnitures.add(new Furnitures("kursi"+i,500000*i,50.0+i));
 //        }
-        FurnitureAdapter adapter = new FurnitureAdapter(this,listFurnitures);
-        recyclerView.setAdapter(adapter);
-        LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(manager);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.insorma.R;
 import com.example.insorma.helper.FurnitureHelper;
 import com.example.insorma.models.Furnitures;
@@ -33,10 +34,14 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull FurnitureViewHolder holder, int position) {
+        Furnitures f = furnitures.get(position);
+        Glide.with(context)
+                .load(f.getFurnitureImage())
+                .into(holder.ivFurniture);
         holder.tvFurnitureName.setText(furnitures.get(position).getFurnitureName());
-        String rating =furnitures.get(position).getFurnitureRating()+"%";
+        String rating = furnitures.get(position).getFurnitureRating().toString();
         holder.tvFurnitureRating.setText(rating);
-        String price = "Rp."+furnitures.get(position).getFurniturePrice();
+        String price = "$ "+furnitures.get(position).getFurniturePrice();
         holder.tvFureniturePrice.setText(price);
 
         holder.itemView.setOnClickListener(view ->{});
