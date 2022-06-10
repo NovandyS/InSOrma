@@ -2,21 +2,34 @@ package com.example.insorma;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Adapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.insorma.helper.FurnitureHelper;
 import com.example.insorma.helper.UserHelper;
+import com.example.insorma.models.Furnitures;
 import com.example.insorma.models.Users;
+import com.example.insorma.viewholder_n_adapter.FurnitureAdapter;
+
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class HomeActivity extends AppCompatActivity {
 
     TextView loginUser;
     UserHelper userHelper;
+    RecyclerView recyclerView;
+    FurnitureHelper furnitureHelper;
+    Vector<Furnitures> furnitures = new Vector<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +43,17 @@ public class HomeActivity extends AppCompatActivity {
         loginUser = findViewById(R.id.tvLoginUser);
         loginUser.setText(user.getUserUName());
 
+        recyclerView = findViewById(R.id.rvFurnitures);
+        furnitureHelper = new FurnitureHelper(this);
+
+        //dummy data test
+        for(int i =0;i<10;i++){
+            furnitures.add(new Furnitures("kursi"+i));
+        }
+        FurnitureAdapter adapter = new FurnitureAdapter(this,furnitures);
+        recyclerView.setAdapter(adapter);
+        LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(manager);
     }
 
     @Override

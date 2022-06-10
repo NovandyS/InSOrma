@@ -24,6 +24,10 @@ public class Furnitures implements Parcelable{
     public Furnitures(){
 
     }
+    //buat dummy data
+    public Furnitures(String name){
+        this.furnitureName=name;
+    }
 
     protected Furnitures(Parcel in) {
         furnitureID = in.readInt();
