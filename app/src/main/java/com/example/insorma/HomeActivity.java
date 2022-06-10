@@ -72,7 +72,16 @@ public class HomeActivity extends AppCompatActivity {
 //                    furnitureHelper.dbInsert(newFurn);
 
                 }
-                FurnitureAdapter adapter = new FurnitureAdapter(this, listFurnitures);
+                FurnitureAdapter adapter = new FurnitureAdapter(this, listFurnitures,new FurnitureAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Furnitures furnitures, int position) {
+
+                        Intent intentdetail = new Intent(HomeActivity.this,DetailActivity.class);
+                        DetailActivity.getFurniture(furnitures);
+                        startActivity(intentdetail);
+
+                    }
+                });
                 recyclerView.setAdapter(adapter);
                 LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
                 recyclerView.setLayoutManager(manager);

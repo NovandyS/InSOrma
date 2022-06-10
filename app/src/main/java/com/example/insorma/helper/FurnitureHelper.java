@@ -9,6 +9,8 @@ import com.example.insorma.databases.Databases;
 import com.example.insorma.models.Furnitures;
 
 import java.util.Vector;
+import com.example.insorma.models.Furnitures;
+import com.example.insorma.models.Users;
 
 public class FurnitureHelper {
 

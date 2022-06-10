@@ -19,10 +19,14 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureViewHolder> 
     Context context;
     FurnitureHelper furnitureHelper;
     Vector<Furnitures> furnitures ;
+    OnItemClickListener itemClick;
 
-    public FurnitureAdapter(Context context, Vector<Furnitures> listFurnitures){
+
+    public FurnitureAdapter(Context context, Vector<Furnitures> listFurnitures,OnItemClickListener listener){
         this.context = context;
         this.furnitures = listFurnitures;
+        this.itemClick = listener;
+
     }
     @NonNull
     @Override
@@ -44,11 +48,17 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureViewHolder> 
         String price = "$ "+furnitures.get(position).getFurniturePrice();
         holder.tvFureniturePrice.setText(price);
 
-        holder.itemView.setOnClickListener(view ->{});
+        holder.itemView.setOnClickListener(view ->{
+            itemClick.onItemClick(furnitures.get(position),position);
+        });
     }
 
     @Override
     public int getItemCount() {
         return furnitures.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Furnitures furnitures, int position);
     }
 }
