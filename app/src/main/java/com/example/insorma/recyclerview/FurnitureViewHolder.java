@@ -1,4 +1,4 @@
-package com.example.insorma.viewholder_n_adapter;
+package com.example.insorma.recyclerview;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +10,7 @@ import com.example.insorma.R;
 
 public class FurnitureViewHolder extends RecyclerView.ViewHolder {
 
-    TextView tvFurnitureName,tvFureniturePrice,tvFurnitureRating;
+    TextView tvFurnitureName, tvFureniturePrice, tvFurnitureRating;
     public FurnitureViewHolder(@NonNull View itemView) {
         super(itemView);
         tvFurnitureName = itemView.findViewById(R.id.tvFurnitureName);

@@ -1,4 +1,4 @@
-package com.example.insorma.viewholder_n_adapter;
+package com.example.insorma.recyclerview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import com.example.insorma.R;
 import com.example.insorma.helper.FurnitureHelper;
 import com.example.insorma.models.Furnitures;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureViewHolder> {
@@ -20,9 +19,9 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureViewHolder> 
     FurnitureHelper furnitureHelper;
     Vector<Furnitures> furnitures ;
 
-    public FurnitureAdapter(Context context, Vector<Furnitures> Dummy){
-        this.context=context;
-        this.furnitures = Dummy;
+    public FurnitureAdapter(Context context, Vector<Furnitures> listFurnitures){
+        this.context = context;
+        this.furnitures = listFurnitures;
     }
     @NonNull
     @Override
@@ -35,8 +34,10 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull FurnitureViewHolder holder, int position) {
         holder.tvFurnitureName.setText(furnitures.get(position).getFurnitureName());
-//        holder.tvFurnitureRating.setText(furnitures.get(position).getFurnitureRating().toString()+"%");
-//        holder.tvFureniturePrice.setText("Rp."+furnitures.get(position).getFurnitureRating().toString());
+        String rating =furnitures.get(position).getFurnitureRating()+"%";
+        holder.tvFurnitureRating.setText(rating);
+        String price = "Rp."+furnitures.get(position).getFurniturePrice();
+        holder.tvFureniturePrice.setText(price);
 
         holder.itemView.setOnClickListener(view ->{});
     }

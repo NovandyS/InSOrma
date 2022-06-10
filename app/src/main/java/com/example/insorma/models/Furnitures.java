@@ -25,8 +25,10 @@ public class Furnitures implements Parcelable{
 
     }
     //buat dummy data
-    public Furnitures(String name){
+    public Furnitures(String name,int price,double rating){
         this.furnitureName=name;
+        this.furniturePrice=price;
+        this.furnitureRating=rating;
     }
 
     protected Furnitures(Parcel in) {
