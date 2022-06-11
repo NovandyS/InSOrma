@@ -71,14 +71,16 @@ public class HomeActivity extends AppCompatActivity {
                     listFurnitures.add(newFurn);
 //                    furnitureHelper.dbInsert(newFurn);
 
+                    Log.wtf("test a",i+"a");
                 }
-                FurnitureAdapter adapter = new FurnitureAdapter(this, listFurnitures,new FurnitureAdapter.OnItemClickListener() {
+
+                FurnitureAdapter adapter = new FurnitureAdapter(this, listFurnitures, new FurnitureAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(Furnitures furnitures, int position) {
 
-                        Intent intentdetail = new Intent(HomeActivity.this,DetailActivity.class);
+                        Intent goDetail = new Intent(HomeActivity.this,DetailActivity.class);
                         DetailActivity.getFurniture(furnitures);
-                        startActivity(intentdetail);
+                        startActivity(goDetail);
 
                     }
                 });
@@ -94,6 +96,18 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         requestQueue.add(request);
+
+//        for (int i = 0; i < listFurnitures.size(); i++){
+//            furnitureHelper.dbInsert(listFurnitures.get(i));
+//            Log.wtf("test b",i+"a"+listFurnitures.get(i).getFurnitureName());
+//        }
+
+//        Vector<Furnitures> furn1 = furnitureHelper.dbRead();
+//        for (int i = 0; i < furn1.size(); i++){
+//
+//            Log.wtf("TestName", furn1.get(i).getFurnitureName() + furn1.size());
+//        }
+
 //        listFurnitures = furnitureHelper.dbRead();
         //dummy data test
 //        for(int i =0;i<10;i++){

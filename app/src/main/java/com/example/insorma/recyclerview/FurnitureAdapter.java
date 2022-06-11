@@ -1,6 +1,7 @@
 package com.example.insorma.recyclerview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,23 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureViewHolder> 
     OnItemClickListener itemClick;
 
 
-    public FurnitureAdapter(Context context, Vector<Furnitures> listFurnitures,OnItemClickListener listener){
+    public FurnitureAdapter(Context context, Vector<Furnitures> listFurnitures, OnItemClickListener listener){
         this.context = context;
         this.furnitures = listFurnitures;
         this.itemClick = listener;
+
+        furnitureHelper = new FurnitureHelper(context);
+
+        for (int i = 0; i < listFurnitures.size(); i++){
+            furnitureHelper.dbInsert(listFurnitures.get(i));
+            Log.wtf("test b",i+"a"+listFurnitures.get(i).getFurnitureName());
+        }
+
+        Vector<Furnitures> furn1 = furnitureHelper.dbRead();
+//        Log.wtf("Test", String.valueOf(furn1.size()));
+        for (int i = 0; i < furn1.size(); i++){
+            Log.wtf("TestName", furn1.get(i).getFurnitureName() + furn1.size());
+        }
 
     }
     @NonNull

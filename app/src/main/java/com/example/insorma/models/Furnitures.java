@@ -12,7 +12,7 @@ public class Furnitures implements Parcelable{
     private Integer furniturePrice;
     private String furnitureDesc;
 
-    public Furnitures( String furnitureImage, String furnitureName, Double furnitureRating, Integer furniturePrice, String furnitureDesc) {
+    public Furnitures(String furnitureImage, String furnitureName, Double furnitureRating, Integer furniturePrice, String furnitureDesc) {
         this.furnitureImage = furnitureImage;
         this.furnitureName = furnitureName;
         this.furnitureRating = furnitureRating;

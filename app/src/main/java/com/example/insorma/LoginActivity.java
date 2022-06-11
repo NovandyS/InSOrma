@@ -89,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
 
         btnRedRegist.setOnClickListener(v -> {
             Intent redRegist = new Intent(this, RegisterActivity.class);
-            this.finish();
             startActivity(redRegist);
         });
 
