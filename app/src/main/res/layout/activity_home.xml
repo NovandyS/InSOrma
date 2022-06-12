@@ -30,12 +30,30 @@
 
     </LinearLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFurnitures"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFurnitures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/noProdData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Product Data"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

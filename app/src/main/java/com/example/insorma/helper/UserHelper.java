@@ -10,7 +10,7 @@ import com.example.insorma.models.Users;
 
 public class UserHelper {
 
-    private final String TABLE_NAME = "users";
+    private final String TABLE_NAME = "Users";
     private Databases databases;
     private SQLiteDatabase db;
 
@@ -22,10 +22,10 @@ public class UserHelper {
     public void dbInsert(Users user){
         db = databases.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("useremail", user.getUserEmail());
-        contentValues.put("useruname", user.getUserUName());
-        contentValues.put("userphone", user.getUserPhone());
-        contentValues.put("userpass", user.getUserPass());
+        contentValues.put("UserEmailAddress", user.getUserEmail());
+        contentValues.put("UserUsername", user.getUserUName());
+        contentValues.put("UserPhoneNumber", user.getUserPhone());
+        contentValues.put("UserPassword", user.getUserPass());
 
         db.insert(TABLE_NAME, null, contentValues);
         db.close();
@@ -34,7 +34,7 @@ public class UserHelper {
     //read
     public Users dbRead(String email, String password){
         db = databases.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE useremail = ? and userpass = ?",
+        Cursor cursor = db.rawQuery("SELECT * FROM Users WHERE UserEmailAddress = ? and UserPassword = ?",
                                     new String[]{email, password});
         Users user = null;
         if (cursor != null && cursor.getCount() > 0){
@@ -53,7 +53,7 @@ public class UserHelper {
 
     public Users dbReadEmail(String email){
         db = databases.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE useremail = ?",
+        Cursor cursor = db.rawQuery("SELECT * FROM Users WHERE UserEmailAddress = ?",
                 new String[]{email});
         Users user = null;
         if (cursor != null && cursor.getCount() > 0){
@@ -72,7 +72,7 @@ public class UserHelper {
 
     public Users dbReadUName(String username){
         db = databases.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM users WHERE useruname = ?",
+        Cursor cursor = db.rawQuery("SELECT * FROM Users WHERE UserUsername = ?",
                 new String[]{username});
         Users user = null;
         if (cursor != null && cursor.getCount() > 0){
@@ -93,9 +93,9 @@ public class UserHelper {
     public void dbUpdate(Users user){
         db = databases.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("useruname", user.getUserUName());
+        contentValues.put("UserUsername", user.getUserUName());
         db.update(TABLE_NAME, contentValues,
-                "userid = ?", new String[]{user.getUserID() + ""});
+                "UserID = ?", new String[]{user.getUserID() + ""});
         db.close();
     }
 
@@ -103,13 +103,8 @@ public class UserHelper {
     public void dbDelete(Users user){
         db = databases.getWritableDatabase();
         db.delete(TABLE_NAME,
-                "userid = ?", new String[]{user.getUserID() + ""});
+                "UserID = ?", new String[]{user.getUserID() + ""});
         db.close();
-    }
-
-    public void clearDB(String TABLE_NAME){
-        String clearDBQuery = "DELETE FROM "+ TABLE_NAME;
-        db.execSQL(clearDBQuery);
     }
 
 }

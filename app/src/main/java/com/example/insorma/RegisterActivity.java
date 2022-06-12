@@ -1,8 +1,11 @@
 package com.example.insorma;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -108,6 +111,17 @@ public class RegisterActivity extends AppCompatActivity {
             if (flag1 == 1 && flag2 == 1 && flag3 == 1 && flag4 == 1){
                 Users user = new Users(emailTxt, usernameTxt, passwordTxt, phonenumTxt);
                 userHelper.dbInsert(user);
+
+                int permissionSMS = ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
+                int permissionPhoneNum = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+                int permissionReadSMS = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
+                if (permissionSMS == PackageManager.PERMISSION_DENIED &&
+                        permissionPhoneNum == PackageManager.PERMISSION_DENIED &&
+                        permissionReadSMS == PackageManager.PERMISSION_DENIED){
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 2);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, 3);
+                }
 
                 Log.v("success register", user.getUserEmail());
 

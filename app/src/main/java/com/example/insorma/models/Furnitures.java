@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 public class Furnitures implements Parcelable{
 
-    private Integer furnitureID;
     private String furnitureImage;
     private String furnitureName;
     private Double furnitureRating;
@@ -23,15 +22,8 @@ public class Furnitures implements Parcelable{
     public Furnitures(){
 
     }
-    //buat dummy data
-    public Furnitures(String name,int price,double rating){
-        this.furnitureName=name;
-        this.furniturePrice=price;
-        this.furnitureRating=rating;
-    }
 
     protected Furnitures(Parcel in) {
-        furnitureID = in.readInt();
         furnitureImage = in.readString();
         furnitureName = in.readString();
         furnitureRating = in.readDouble();
@@ -50,14 +42,6 @@ public class Furnitures implements Parcelable{
             return new Users[size];
         }
     };
-
-    public Integer getFurnitureID() {
-        return furnitureID;
-    }
-
-    public void setFurnitureID(Integer furnitureID) {
-        this.furnitureID = furnitureID;
-    }
 
     public String getFurnitureImage() {
         return furnitureImage;
@@ -106,7 +90,6 @@ public class Furnitures implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(furnitureID);
         parcel.writeString(furnitureImage);
         parcel.writeString(furnitureName);
         parcel.writeDouble(furnitureRating);

@@ -3,46 +3,50 @@ package com.example.insorma.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Transcations implements Parcelable {
+public class Transactions implements Parcelable {
 
     private Integer transID;
     private Integer userID;
-    private Integer prodID;
+    private String prodID;
     private String transDate;
     private Integer transQuant;
-    private Integer transTotal;
 
-    public void Transactions(Integer transID, Integer userID, Integer prodID, String transDate, Integer transQuant, Integer transTotal) {
+    public Transactions(Integer transID, Integer userID, String prodID, String transDate, Integer transQuant){
         this.transID = transID;
         this.userID = userID;
         this.prodID = prodID;
         this.transDate = transDate;
         this.transQuant = transQuant;
-        this.transTotal = transTotal;
     }
 
-    public Transcations(){
+    public Transactions(){
 
     }
 
-    protected Transcations(Parcel in) {
+    public Transactions(Integer userID, String prodID, String transDate, Integer transQuant){
+        this.userID = userID;
+        this.prodID = prodID;
+        this.transDate = transDate;
+        this.transQuant = transQuant;
+    }
+
+    protected Transactions(Parcel in) {
         transID = in.readInt();
         userID = in.readInt();
-        prodID = in.readInt();
+        prodID = in.readString();
         transDate = in.readString();
         transQuant = in.readInt();
-        transTotal = in.readInt();
     }
 
-    public static final Creator<Transcations> CREATOR = new Creator<Transcations>() {
+    public static final Creator<Transactions> CREATOR = new Creator<Transactions>() {
         @Override
-        public Transcations createFromParcel(Parcel in) {
-            return new Transcations(in);
+        public Transactions createFromParcel(Parcel in) {
+            return new Transactions(in);
         }
 
         @Override
-        public Transcations[] newArray(int size) {
-            return new Transcations[size];
+        public Transactions[] newArray(int size) {
+            return new Transactions[size];
         }
     };
 
@@ -62,11 +66,11 @@ public class Transcations implements Parcelable {
         this.userID = userID;
     }
 
-    public Integer getProdID() {
+    public String getProdID() {
         return prodID;
     }
 
-    public void setProdID(Integer prodID) {
+    public void setProdID(String prodID) {
         this.prodID = prodID;
     }
 
@@ -86,14 +90,6 @@ public class Transcations implements Parcelable {
         this.transQuant = transQuant;
     }
 
-    public Integer getTransTotal() {
-        return transTotal;
-    }
-
-    public void setTransTotal(Integer transTotal) {
-        this.transTotal = transTotal;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -103,9 +99,8 @@ public class Transcations implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(transID);
         parcel.writeInt(userID);
-        parcel.writeInt(prodID);
+        parcel.writeString(prodID);
         parcel.writeString(transDate);
         parcel.writeInt(transQuant);
-        parcel.writeInt(transTotal);
     }
 }

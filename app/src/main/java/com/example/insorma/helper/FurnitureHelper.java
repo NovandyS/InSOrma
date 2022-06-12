@@ -15,23 +15,23 @@ import com.example.insorma.models.Users;
 
 public class FurnitureHelper {
 
-    private final String TABLE_NAME = "furnitures";
-    private Databases dbHelper;
+    private final String TABLE_NAME = "Product";
+    private Databases databases;
     private SQLiteDatabase db;
 
     public FurnitureHelper(Context context){
-        dbHelper = new Databases(context);
+        databases = new Databases(context);
     }
 
     // insert
     public void dbInsert(Furnitures furnitures){
-        db = dbHelper.getWritableDatabase();
+        db = databases.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("furnimage", furnitures.getFurnitureImage());
-        cv.put("furnname", furnitures.getFurnitureName());
-        cv.put("furnrating", furnitures.getFurnitureRating());
-        cv.put("furnprice", furnitures.getFurniturePrice());
-        cv.put("furndesc", furnitures.getFurnitureDesc());
+        cv.put("ProductImage", furnitures.getFurnitureImage());
+        cv.put("ProductName", furnitures.getFurnitureName());
+        cv.put("ProductRating", furnitures.getFurnitureRating());
+        cv.put("ProductPrice", furnitures.getFurniturePrice());
+        cv.put("ProductDescription", furnitures.getFurnitureDesc());
 
         db.insert(TABLE_NAME, null, cv);
         db.close();
@@ -40,8 +40,8 @@ public class FurnitureHelper {
     // read
     public Vector<Furnitures> dbRead(){
         Vector<Furnitures> listFurnitures = new Vector<>();
-        db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM furnitures", null);
+        db = databases.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Product", null);
         cursor.moveToFirst();
 
         Furnitures temp;
@@ -51,11 +51,11 @@ public class FurnitureHelper {
 
         if (cursor != null && cursor.getCount() > 0){
             do {
-                tempImg = cursor.getString(cursor.getColumnIndexOrThrow("furnimage"));
-                tempName = cursor.getString(cursor.getColumnIndexOrThrow("furnname"));
-                tempRating = cursor.getDouble(cursor.getColumnIndexOrThrow("furnrating"));
-                tempPrice = cursor.getInt(cursor.getColumnIndexOrThrow("furnprice"));
-                tempDesc = cursor.getString(cursor.getColumnIndexOrThrow("furndesc"));
+                tempImg = cursor.getString(cursor.getColumnIndexOrThrow("ProductImage"));
+                tempName = cursor.getString(cursor.getColumnIndexOrThrow("ProductName"));
+                tempRating = cursor.getDouble(cursor.getColumnIndexOrThrow("ProductRating"));
+                tempPrice = cursor.getInt(cursor.getColumnIndexOrThrow("ProductPrice"));
+                tempDesc = cursor.getString(cursor.getColumnIndexOrThrow("ProductDescription"));
 
                 temp = new Furnitures(tempImg, tempName, tempRating, tempPrice, tempDesc);
                 listFurnitures.add(temp);
@@ -69,7 +69,28 @@ public class FurnitureHelper {
         return listFurnitures;
     }
 
-    public void dbClear(){
+    public Furnitures dbReadFurn(String prodID){
+        db = databases.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Product WHERE ProductName = ?",
+                new String[]{prodID});
+        Furnitures furnitures = null;
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            furnitures = new Furnitures();
+            furnitures.setFurnitureName(cursor.getString(0));
+            furnitures.setFurnitureRating(cursor.getDouble(1));
+            furnitures.setFurniturePrice(cursor.getInt(2));
+            furnitures.setFurnitureImage(cursor.getString(3));
+            furnitures.setFurnitureDesc(cursor.getString(4));
+            cursor.close();
+        }
+        db.close();
+        return furnitures;
+    }
 
+    public void dbClear(){
+        db = databases.getWritableDatabase();
+        db.delete(TABLE_NAME, null, null);
+        db.close();
     }
 }

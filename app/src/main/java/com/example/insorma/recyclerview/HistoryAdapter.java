@@ -9,21 +9,30 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.insorma.HistoryActivity;
 import com.example.insorma.R;
+import com.example.insorma.helper.FurnitureHelper;
 import com.example.insorma.models.Furnitures;
-import com.example.insorma.models.Transcations;
+import com.example.insorma.models.Transactions;
 
 import java.util.Vector;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryViewHolder> {
     Context context;
-    Vector<Transcations> transcations = new Vector<>();
-    Furnitures furnitures;
+    Vector<Transactions> transactions;
+    FurnitureHelper furnitureHelper;
 
-    public HistoryAdapter(Context context, Vector<Transcations> transcations, Furnitures furnitures) {
+    public HistoryAdapter(Context context, Vector<Transactions> transactions) {
         this.context = context;
-        this.transcations = transcations;
-        this.furnitures = furnitures;
+        this.transactions = transactions;
+        furnitureHelper = new FurnitureHelper(context);
+
+        if (transactions.isEmpty()){
+            HistoryActivity.nodatashow();
+        }
+        else{
+            HistoryActivity.nodatahide();
+        }
     }
 
     @NonNull
@@ -36,11 +45,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        holder.transactionid.setText(transcations.get(position).getTransID());
-        holder.tanggal.setText(transcations.get(position).getTransDate());
+        Furnitures furnitures = furnitureHelper.dbReadFurn(transactions.get(position).getProdID());
+
+        holder.transactionid.setText(transactions.get(position).getTransID().toString());
+        holder.tanggal.setText(transactions.get(position).getTransDate());
         holder.namaproduk.setText(furnitures.getFurnitureName());
-        holder.totalprice.setText(furnitures.getFurniturePrice()*transcations.get(position).getTransQuant());
-        holder.quantity.setText(transcations.get(position).getTransQuant());
+        Integer total = furnitures.getFurniturePrice()*transactions.get(position).getTransQuant();
+        holder.totalprice.setText("$ " + total.toString());
+        holder.quantity.setText(transactions.get(position).getTransQuant().toString());
         Glide.with(context)
                 .load(furnitures.getFurnitureImage())
                 .into(holder.imageView);
@@ -48,6 +60,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryViewHolder> {
 
     @Override
     public int getItemCount() {
-        return transcations.size();
+        return transactions.size();
     }
 }

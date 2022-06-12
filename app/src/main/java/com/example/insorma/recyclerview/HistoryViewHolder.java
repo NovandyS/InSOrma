@@ -15,11 +15,11 @@ public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
     public HistoryViewHolder(@NonNull View itemView) {
         super(itemView);
-        totalprice = itemView.findViewById(R.id.tvFurnitureTotalPrice);
-        namaproduk = itemView.findViewById(R.id.tvFurnitureNamehistory);
+        totalprice = itemView.findViewById(R.id.tvTotal);
+        namaproduk = itemView.findViewById(R.id.tvProdNameHistory);
         quantity = itemView.findViewById(R.id.tvQuantity);
-        tanggal = itemView.findViewById(R.id.transactiondate);
-        transactionid = itemView.findViewById(R.id.transactionid);
-        imageView = itemView.findViewById(R.id.imageViewhistory);
+        tanggal = itemView.findViewById(R.id.tvTransDate);
+        transactionid = itemView.findViewById(R.id.tvTransID);
+        imageView = itemView.findViewById(R.id.ivHistory);
     }
 }

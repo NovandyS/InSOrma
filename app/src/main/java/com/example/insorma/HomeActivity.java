@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -34,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     UserHelper userHelper;
     RecyclerView recyclerView;
     FurnitureHelper furnitureHelper;
-    Vector<Furnitures> listFurnitures = new Vector<>();
+    static TextView nodata2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
         furnitureHelper = new FurnitureHelper(this);
 
         Users user = getIntent().getParcelableExtra("user");
-
+        nodata2 = findViewById(R.id.noProdData);
         loginUser = findViewById(R.id.tvLoginUser);
         loginUser.setText(user.getUserUName());
 
@@ -58,6 +59,8 @@ public class HomeActivity extends AppCompatActivity {
             try {
                 JSONArray furnitures = response.getJSONArray("furnitures");
 
+                furnitureHelper.dbClear();
+
                 for (int i = 0; i < furnitures.length(); i++){
                     JSONObject furn = furnitures.getJSONObject(i);
 
@@ -68,17 +71,17 @@ public class HomeActivity extends AppCompatActivity {
                     String furnDesc = furn.getString("description");
 
                     Furnitures newFurn = new Furnitures(furnImg, furnName, furnRating, furnPrice, furnDesc);
-                    listFurnitures.add(newFurn);
-//                    furnitureHelper.dbInsert(newFurn);
+//                    listFurnitures.add(newFurn);
+                    furnitureHelper.dbInsert(newFurn);
 
                     Log.wtf("test a",i+"a");
                 }
 
-                FurnitureAdapter adapter = new FurnitureAdapter(this, listFurnitures, new FurnitureAdapter.OnItemClickListener() {
+                FurnitureAdapter adapter = new FurnitureAdapter(this, furnitureHelper.dbRead(), new FurnitureAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(Furnitures furnitures, int position) {
-
                         Intent goDetail = new Intent(HomeActivity.this,DetailActivity.class);
+                        goDetail.putExtra("user", user);
                         DetailActivity.getFurniture(furnitures);
                         startActivity(goDetail);
 
@@ -96,25 +99,14 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         requestQueue.add(request);
-
-//        for (int i = 0; i < listFurnitures.size(); i++){
-//            furnitureHelper.dbInsert(listFurnitures.get(i));
-//            Log.wtf("test b",i+"a"+listFurnitures.get(i).getFurnitureName());
-//        }
-
-//        Vector<Furnitures> furn1 = furnitureHelper.dbRead();
-//        for (int i = 0; i < furn1.size(); i++){
-//
-//            Log.wtf("TestName", furn1.get(i).getFurnitureName() + furn1.size());
-//        }
-
-//        listFurnitures = furnitureHelper.dbRead();
-        //dummy data test
-//        for(int i =0;i<10;i++){
-//            furnitures.add(new Furnitures("kursi"+i,500000*i,50.0+i));
-//        }
     }
 
+    public static void nodata2show(){
+        nodata2.setVisibility(View.VISIBLE);
+    }
+    public static void nodata2hide(){
+        nodata2.setVisibility(View.INVISIBLE);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -124,7 +116,6 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        userHelper = new UserHelper(this);
         Users user = getIntent().getParcelableExtra("user");
         switch (item.getItemId()){
             case R.id.home:

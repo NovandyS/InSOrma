@@ -8,27 +8,25 @@ import androidx.annotation.Nullable;
 
 public class Databases extends SQLiteOpenHelper {
 
-    private final String CREATE_TABLE_USERS = "CREATE TABLE users(userid INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "useremail TEXT not null," +
-            "useruname TEXT not null," +
-            "userphone TEXT not null," +
-            "userpass TEXT not null)";
+    private final String CREATE_TABLE_USERS = "CREATE TABLE Users(UserID INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "UserEmailAddress TEXT not null," +
+            "UserUsername TEXT not null," +
+            "UserPhoneNumber TEXT not null," +
+            "UserPassword TEXT not null)";
 
-    private final String CREATE_TABLE_FURNITURES = "CREATE TABLE furnitures(furnid INTEGER PRIMARY KEY AUTOINCREMENT," +
-            "furnimage TEXT not null," +
-            "furnname TEXT not null," +
-            "furnrating REAL not null," +
-            "furnprice INTEGER not null," +
-            "furndesc TEXT not null)";
-//
-//    private final String CREATE_TABLE_TRANSACTIONS = "CREATE TABLE transactions(transid INTEGER PRIMARY KEY AUTOINCREMENT," +
-//            "userid INTEGER not null," +
-//            "prodid INTEGER not null," +
-//            "transdate TEXT not null," +
-//            "transquant INTEGER not null," +
-//            "transtotal INTEGER not null," +
-//            "FOREIGN KEY (userid) REFERENCES users (userid)," +
-//            "FOREIGN KEY (prodid) REFERENCES furnitures (furnid))";
+    private final String CREATE_TABLE_PRODUCT = "CREATE TABLE Product(ProductName TEXT PRIMARY KEY," +
+            "ProductRating REAL not null," +
+            "ProductPrice INTEGER not null," +
+            "ProductImage TEXT not null," +
+            "ProductDescription TEXT not null)";
+
+    private final String CREATE_TABLE_TRANSACTION = "CREATE TABLE Transactions(TransactionID INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "UserID INTEGER not null," +
+            "ProductID TEXT not null," +
+            "TransactionDate DATE not null," +
+            "Quantity INTEGER not null," +
+            "FOREIGN KEY (UserID) REFERENCES Users (UserID)," +
+            "FOREIGN KEY (ProductID) REFERENCES Product (ProductName))";
 
     public Databases(@Nullable Context context) {
         super(context, "sqlite", null, 1);
@@ -37,14 +35,14 @@ public class Databases extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_TABLE_USERS);
-        sqLiteDatabase.execSQL(CREATE_TABLE_FURNITURES);
-//        sqLiteDatabase.execSQL(CREATE_TABLE_TRANSACTIONS);
+        sqLiteDatabase.execSQL(CREATE_TABLE_PRODUCT);
+        sqLiteDatabase.execSQL(CREATE_TABLE_TRANSACTION);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS users");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS furnitures");
-//        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS transactions");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Users");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Product");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Transactions");
     }
 }
