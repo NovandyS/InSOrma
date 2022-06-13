@@ -19,13 +19,13 @@
         tools:layout_editor_absoluteX="162dp"
         tools:layout_editor_absoluteY="31dp" />
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="360dp"
-        android:layout_height="480dp"
-        android:layout_margin="24dp"
-        tools:context=".MapsActivity" />
+<!--    <fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:map="http://schemas.android.com/apk/res-auto"-->
+<!--        xmlns:tools="http://schemas.android.com/tools"-->
+<!--        android:id="@+id/map"-->
+<!--        android:name="com.google.android.gms.maps.SupportMapFragment"-->
+<!--        android:layout_width="360dp"-->
+<!--        android:layout_height="480dp"-->
+<!--        android:layout_margin="24dp"-->
+<!--        tools:context=".MapsActivity" />-->
 </LinearLayout>
