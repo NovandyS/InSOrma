@@ -91,9 +91,18 @@ public class DetailActivity extends AppCompatActivity {
                 transactionHelper.dbInsert(transactions);
 
                 String message = "You have bought " + quantity + " pc(s) of " + furniture.getFurnitureName() + " at " + date;
+
+                //Send to Emulator Phone Number
+//                String phone;
+//                TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+//                phone = telephonyManager.getLine1Number();
+//
+//                SmsManager manager = SmsManager.getDefault();
+//                manager.sendTextMessage(phone, null, message, null, null);
+
+                //Send to User Phone Number
                 String phone;
-                TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-                phone = telephonyManager.getLine1Number();
+                phone = user.getUserPhone();
 
                 SmsManager manager = SmsManager.getDefault();
                 manager.sendTextMessage(phone, null, message, null, null);
