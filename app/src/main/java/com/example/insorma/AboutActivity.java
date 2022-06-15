@@ -38,7 +38,7 @@ public class AboutActivity extends FragmentActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng latLng = new LatLng(1.310128,103.816030);
+        LatLng latLng = new LatLng(6.171296,106.753855);
         mMap.addMarker(new MarkerOptions().position(latLng).title("InSOrma Store"));
         //CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(30).build();
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
